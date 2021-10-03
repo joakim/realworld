@@ -1,12 +1,7 @@
 <script context="module">
-	load: async ([ :page, :fetch ]) -> {
+	load: async ([ :page, :fetch ]) ->
 		res: await fetch "/profile/@{ page.params.user }.json"
-		
-		[
-			props:
-				profile: await res.json()
-		]
-	}
+		[ props: [ profile: await res.json() ] ]
 	
 	(load)
 </script>
@@ -23,8 +18,8 @@
 	$ is-user: $session.user and profile.username = $session.user.username
 	
 	let current-token
-	toggle_following: async () -> {
-		token: (set current-token: [:])
+	toggle_following: async () -> *
+		token: (set current-token: [])
 		
 		[ :following, :username ]: profile
 		
@@ -34,16 +29,13 @@
 		res: await fetch("/profile/@{ username }/follow", [
 			method: 'delete' if following else 'post'
 		])
-
+		
 		result: await res.json()
 
 		-- synchronise with the server, in case it disagrees
 		-- with our optimistic UI for some reason — but only
 		-- if the button wasn't re-toggled in the meantime
-		if token = current-token {
-			set profile: result.profile
-		}
-	}
+		if token = current-token -> set profile: result.profile
 	
 	(profile)
 </script>
