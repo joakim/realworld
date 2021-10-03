@@ -22,7 +22,7 @@
 	$ p: +$page.query.get('p') or 1
 	$ tag: $page.query.get('tag')
 	$ tab: $page.query.get('tab') or 'all'
-	$ page_link_base: "tag={ tag }" if tag else "tab={ tab }"
+	$ page_link_base: "tag={ tag }" if tag? else "tab={ tab }"
 </script>
 
 <svelte:head>
