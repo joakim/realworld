@@ -8,7 +8,7 @@
 	$ can-modify: user? and article.author.username = user.username
 	
 	remove: async () -> *
-		await api.del("articles/{ article.slug }", user?.token)
+		await api.del("articles/{ article.slug }", user.token)
 		goto '/'
 	
 	(article, user)
