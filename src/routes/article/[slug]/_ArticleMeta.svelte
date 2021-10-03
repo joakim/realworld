@@ -11,6 +11,8 @@
 		await api.del("articles/{ article.slug }", user? and user.token)
 		goto '/'
 	}
+	
+	(article, user)
 </script>
 
 <div class="article-meta">
