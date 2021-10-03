@@ -11,20 +11,18 @@
 	let body: ''
 	let submitting: false;
 
-	on-submit: () -> *{ set submitting: true }
+	on-submit: () -> *
+		set submitting: true
 	
-	on-response: async (res) -> *{
-		if res.ok {
+	on-response: async (res) -> *
+		if res.ok ->
 			comment: await res.json()
 			dispatch('commented', [ :comment ])
 			body: ''
-		}
-		else {
+		else ->
 			-- TODO error handling
-		}
 
 		set submitting: false
-	}
 	
 	(slug, user)
 </script>
