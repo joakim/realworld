@@ -1,7 +1,6 @@
 <script context="module">
-	load: async ([ :session ]) -> {
-		[ redirect: '/', status: 302 ] if session.user else []
-	}
+	load: async ([ :session ]) ->
+		[ redirect: '/', status: 302 ] if session.user? else []
 	
 	(load)
 </script>
@@ -17,17 +16,15 @@
 	let password: ''
 	let errors: null
 	
-	submit: async (event) -> {
+	submit: async (event) ->
 		response: await post('auth/register', [ :username, :email, :password ])
 		
 		-- TODO handle network errors
 		set errors: response.errors
-
-		if response.user {
+		
+		if response.user? ->
 			set $session.user: response.user
 			goto '/'
-		}
-	}
 </script>
 
 <svelte:head>
@@ -43,17 +40,17 @@
 					<a href="/login">Have an account?</a>
 				</p>
 
-				<ListErrors {errors}/>
+				<ListErrors { errors }/>
 
-				<form on:submit|preventDefault={submit}>
+				<form on:submit|preventDefault={ submit }>
 					<fieldset class="form-group">
-						<input class="form-control form-control-lg" type="text" required placeholder="Your Name" bind:value={username}>
+						<input class="form-control form-control-lg" type="text" required placeholder="Your Name" bind:value={ username }>
 					</fieldset>
 					<fieldset class="form-group">
-						<input class="form-control form-control-lg" type="email" required placeholder="Email" bind:value={email}>
+						<input class="form-control form-control-lg" type="email" required placeholder="Email" bind:value={ email }>
 					</fieldset>
 					<fieldset class="form-group">
-						<input class="form-control form-control-lg" type="password" required placeholder="Password" bind:value={password}>
+						<input class="form-control form-control-lg" type="password" required placeholder="Password" bind:value={ password }>
 					</fieldset>
 					<button class="btn btn-lg btn-primary pull-xs-right">
 						Sign up
