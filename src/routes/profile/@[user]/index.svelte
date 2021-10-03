@@ -1,5 +1,5 @@
 <script context="module">
-	[ :create-load ]: import './_load.js'
+	(create-load): import './_load.js'
 	load: create-load 'articles'
 	
 	(load)
