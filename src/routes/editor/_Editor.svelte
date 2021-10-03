@@ -9,37 +9,29 @@
 	let publishing: false
 	let errors
 	
-	add-tag: (input) -> *{
+	add-tag: (input) -> *
 		set article.tagList: [article.tagList..., input.value]
 		set input.value: ''
-	}
 	
-	remove: (index) -> *{
+	remove: (index) -> *
 		set article.tagList: [
 			article.tagList.slice(0, index)...
 			article.tagList.slice(index + 1)...
 		]
-	}
 	
-	on-submit: () -> *{
+	on-submit: () -> *
 		set publishing: true
-	}
 	
-	on-response: async (res) -> *{
-		if res.ok {
-			goto res.headers.get 'location'
-		}
-	}
-	
-	enter: (node, callback) -> {
-		on-keydown: (event) -> *{
-			if event.which = 13 { callback node }
-		}
+	on-response: async (res) -> *
+		if res.ok -> goto res.headers.get 'location'
+		
+	enter: (node, callback) ->
+		on-keydown: (event) -> *
+			if event.which = 13 -> callback node
 		
 		node.addEventListener('keydown', on-keydown)
 		
 		[ destroy: () => node.removeEventListener('keydown', on-keydown) ]
-	}
 	
 	(article, slug)
 </script>
