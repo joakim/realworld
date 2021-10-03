@@ -1,6 +1,6 @@
 api: import '$lib/api'
 
-get: async () -> {
+get: async () ->
 	[ :tags ]: await api.get('tags')
 	
 	-- The Conduit API doesn't set a cache-control header on
@@ -14,6 +14,5 @@ get: async () -> {
 		body:
 			tags: tags.filter (tag) -> regex`(?i)^[a-z]+$`.test(tag)
 	]
-}
 
 (get)
