@@ -7,7 +7,7 @@
 <script>
 	(default as Editor): import './_Editor.svelte'
 	
-	let article: [ title: '', description: '', body: '', tagList: [] ]
+	let article: [ title: '', description: '', body: '', tagList: array[] ]
 </script>
 
 <Editor { article }/>
