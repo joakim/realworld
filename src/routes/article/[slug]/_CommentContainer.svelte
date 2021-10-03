@@ -1,19 +1,21 @@
 <script>
-	import CommentInput from './_CommentInput.svelte';
-	import Comment from './_Comment.svelte';
-
-	export let comments;
-	export let slug;
-	export let user;
+	(default as CommentInput): import './_CommentInput.svelte'
+	(default as Comment): import './_Comment.svelte'
+	
+	let comments
+	let slug
+	let user
+	
+	(comments, slug, user)
 </script>
 
 <div class="col-xs-12 col-md-8 offset-md-2">
 	{#if user}
 		<div>
 			<CommentInput
-				{slug}
-				{user}
-				on:commented={({ detail }) => (comments = [detail.comment, ...comments])}
+				{ slug }
+				{ user }
+				on:commented={ ([:detail]) -> (set comments: [detail.comment, comments...]) }
 			/>
 		</div>
 	{:else}
@@ -27,10 +29,10 @@
 
 	{#each comments as comment, i (comment.id)}
 		<Comment
-			{comment}
-			{slug}
-			{user}
-			on:deleted={() => (comments = [...comments.slice(0, i), ...comments.slice(i + 1)])}
+			{ comment }
+			{ slug }
+			{ user }
+			on:deleted={ () -> (set comments: [comments.slice(0, i)..., comments.slice(i + 1)...]) }
 		/>
 	{/each}
 </div>
