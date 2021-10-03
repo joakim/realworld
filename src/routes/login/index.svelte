@@ -1,7 +1,5 @@
 <script context="module">
-	load: async ([ :session ]) -> {
-		[ status: 302, redirect: '/' ] if session.user else []
-	}
+	load: async ([ :session ]) -> [ status: 302, redirect: '/' ] if session.user? else []
 	
 	(load)
 </script>
@@ -16,17 +14,15 @@
 	let password: ''
 	let errors: null
 	
-	submit: async (event) -> {
+	submit: async (event) -> *
 		response: await post('auth/login', [ :email, :password ])
 		
 		-- TODO handle network errors
 		set errors: response.errors
-
-		if response.user {
+		
+		if response.user ->
 			set $session.user: response.user
-			goto '/')
-		}
-	}
+			goto '/'
 </script>
 
 <svelte:head>
