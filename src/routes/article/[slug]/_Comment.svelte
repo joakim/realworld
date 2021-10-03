@@ -1,44 +1,44 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
-	import { ajax } from '$lib/actions.js';
-
-	export let comment;
-	export let slug;
-	export let user;
-
-	const dispatch = createEventDispatcher();
-	const onresponse = (res) => {
-		if (res.ok) {
-			// check the comment was deleted (e.g. we didn't
-			// double-click and submit twice)
-			dispatch('deleted');
+	(createEventDispatcher): import 'svelte'
+	(ajax): import '$lib/actions.js'
+	
+	let comment
+	let slug
+	let user
+	
+	dispatch: createEventDispatcher()
+	on-response: (res) -> *{
+		if res.ok {
+			-- check the comment was deleted (e.g. we didn't
+			-- double-click and submit twice)
+			dispatch 'deleted'
 		}
-	};
+	}
 </script>
 
 <div class="card">
 	<div class="card-block">
-		<p class="card-text">{comment.body}</p>
+		<p class="card-text">{ comment.body }</p>
 	</div>
 
 	<div class="card-footer">
-		<a href="/profile/@{comment.author.username}" class="comment-author">
-			<img src={comment.author.image} class="comment-author-img" alt={comment.author.username} />
+		<a href="/profile/@{ comment.author.username }" class="comment-author">
+			<img src={ comment.author.image } class="comment-author-img" alt={ comment.author.username } />
 		</a>
 
 		<a
-			href="/profile/@{comment.author.username}"
+			href="/profile/@{ comment.author.username }"
 			class="comment-author"
-		>{comment.author.username}</a>
+		>{ comment.author.username }</a>
 
-		<span class="date-posted"> {new Date(comment.createdAt).toDateString()} </span>
+		<span class="date-posted"> { Date(comment.createdAt).toDateString() } </span>
 
-		{#if user && comment.author.username === user.username}
+		{#if user and comment.author.username = user.username}
 			<form
-				action="/article/{slug}/comments/{comment.id}.json?_method=delete"
+				action="/article/{ slug }/comments/{ comment.id }.json?_method=delete"
 				method="post"
 				class="mod-options"
-				use:ajax={{ onresponse }}
+				use:ajax={ [:onresponse] }
 			>
 				<button class="ion-trash-a" />
 			</form>
