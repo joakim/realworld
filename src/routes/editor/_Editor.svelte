@@ -1,58 +1,59 @@
 <script>
-	import { goto } from '$app/navigation';
-	import ListErrors from '$lib/ListErrors.svelte';
-	import { ajax } from '$lib/actions.js';
-
-	export let article;
-	export let slug;
-
-	let publishing = false;
-	let errors;
-
-	function add_tag(input) {
-		article.tagList = [...article.tagList, input.value];
-		input.value = '';
+	(goto): import '$app/navigation'
+	(default as ListErrors): import '$lib/ListErrors.svelte'
+	(ajax): import '$lib/actions.js'
+	
+	let article
+	let slug
+	
+	let publishing: false
+	let errors
+	
+	add-tag: (input) -> *{
+		set article.tagList: [article.tagList..., input.value]
+		set input.value: ''
 	}
-
-	function remove(index) {
-		article.tagList = [...article.tagList.slice(0, index), ...article.tagList.slice(index + 1)];
+	
+	remove: (index) -> *{
+		set article.tagList: [
+			article.tagList.slice(0, index)...
+			article.tagList.slice(index + 1)...
+		]
 	}
-
-	const onsubmit = () => {
-		publishing = true;
-	};
-
-	const onresponse = async (res) => {
-		if (res.ok) {
-			goto(res.headers.get('location'));
+	
+	on-submit: () -> *{
+		set publishing: true
+	}
+	
+	on-response: async (res) -> *{
+		if res.ok {
+			goto res.headers.get 'location'
 		}
-	};
-
-	function enter(node, callback) {
-		function onkeydown(event) {
-			if (event.which === 13) callback(node);
-		}
-
-		node.addEventListener('keydown', onkeydown);
-
-		return {
-			destroy() {
-				node.removeEventListener('keydown', onkeydown);
-			}
-		};
 	}
+	
+	enter: (node, callback) -> {
+		on-keydown: (event) -> *{
+			if event.which = 13 { callback node }
+		}
+		
+		node.addEventListener('keydown', on-keydown)
+		
+		[ destroy: () => node.removeEventListener('keydown', on-keydown) ]
+	}
+	
+	(article, slug)
 </script>
 
 <div class="editor-page">
 	<div class="container page">
 		<div class="row">
 			<div class="col-md-10 offset-md-1 col-xs-12">
-				<ListErrors {errors} />
+				<ListErrors { errors } />
 
 				<form
-					action={slug ? `/article/${slug}.json?_method=put` : `/article.json`}
+					action={ "/article/{ slug }.json?_method=put" if slug else '/article.json' }
 					method="post"
-					use:ajax={{ onsubmit, onresponse }}
+					use:ajax={ [:on-submit, :on-response] }
 				>
 					<fieldset>
 						<fieldset class="form-group">
@@ -60,7 +61,7 @@
 								class="form-control form-control-lg"
 								type="text"
 								placeholder="Article Title"
-								bind:value={article.title}
+								bind:value={ article.title }
 							/>
 						</fieldset>
 
@@ -69,7 +70,7 @@
 								class="form-control"
 								type="text"
 								placeholder="What's this article about?"
-								bind:value={article.description}
+								bind:value={ article.description }
 							/>
 						</fieldset>
 
@@ -78,7 +79,7 @@
 								class="form-control"
 								rows="8"
 								placeholder="Write your article (in markdown)"
-								bind:value={article.body}
+								bind:value={ article.body }
 							/>
 						</fieldset>
 
@@ -87,20 +88,20 @@
 								class="form-control"
 								type="text"
 								placeholder="Enter tags"
-								use:enter={add_tag}
+								use:enter={ add-tag }
 							/>
 
 							<div class="tag-list">
 								{#each article.tagList as tag, i}
 									<span class="tag-default tag-pill">
-										<i class="ion-close-round" on:click={() => remove(i)} />
-										{tag}
+										<i class="ion-close-round" on:click={ () -> remove i } />
+										{ tag }
 									</span>
 								{/each}
 							</div>
 						</fieldset>
 
-						<button class="btn btn-lg pull-xs-right btn-primary" disabled={publishing}>
+						<button class="btn btn-lg pull-xs-right btn-primary" disabled={ publishing }>
 							Publish Article
 						</button>
 					</fieldset>
