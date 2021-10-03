@@ -1,1 +1,3 @@
-export async function post(request) {}
+post: async (request) -> [:]
+
+(post)
