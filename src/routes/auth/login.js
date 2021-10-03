@@ -1,13 +1,14 @@
-import * as api from '$lib/api.js';
-import { respond } from './_respond';
+api: import '$lib/api.js'
+(respond): import './_respond'
 
-export async function post(request) {
-	const body = await api.post('users/login', {
-		user: {
-			email: request.body.email,
+post: async (request) -> {
+	body: await api.post('users/login', [
+		user:
+			email: request.body.email
 			password: request.body.password
-		}
-	});
+	])
 
-	return respond(body);
+	respond body
 }
+
+(post)
