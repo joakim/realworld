@@ -1,1 +1,1 @@
-(post: async (request) -> [:])
+(post: async (request) -> [])
