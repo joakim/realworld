@@ -1,48 +1,51 @@
 <script context="module">
-	export function load({ session }) {
-		const { user } = session;
+	load: ([ :session ]) -> {
+		[ :user ]: session
 
-		if (!user) {
-			return {
-				status: 302,
+		if not user {
+			return [
+				status: 302
 				redirect: '/login'
-			};
+			]
 		}
 
-		return {
-			props: { user }
-		};
+		[
+			props: [ :user ]
+		]
 	}
+	
+	(load)
 </script>
 
 <script>
-	import { session } from '$app/stores';
-	import ListErrors from '$lib/ListErrors.svelte';
-	import { post } from '$lib/utils.js';
-
-	export let user;
-
-	let in_progress;
-	let errors;
-
-	async function logout() {
-		await post(`auth/logout`);
-
-		// this will trigger a redirect, because it
-		// causes the `load` function to run again
-		$session.user = null;
+	[ session ]: import '$app/stores'
+	ListErrors: import '$lib/ListErrors.svelte'
+	[ post ]: import '$lib/utils.js'
+	
+	let user
+	let in-progress
+	let errors
+	
+	logout: async () -> {
+		await post('auth/logout')
+		
+		-- this will trigger a redirect, because it
+		-- causes the `load` function to run again
+		set $session.user: null
 	}
 
-	async function save() {
-		in_progress = true;
+	save: async () -> {
+		set in-progress: true
 
-		const response = await post(`auth/save`, user);
+		response: await post('auth/save', user)
 
-		errors = response.errors;
-		if (response.user) $session.user = response.user;
+		set errors: response.errors
+		if response.user { set $session.user: response.user }
 
-		in_progress = false;
+		set in-progress: false
 	}
+	
+	(user)
 </script>
 
 <svelte:head>
@@ -107,7 +110,7 @@
 						<button
 							class="btn btn-lg btn-primary pull-xs-right"
 							type="submit"
-							disabled={in_progress}
+							disabled={in-progress}
 						>
 							Update Settings
 						</button>
