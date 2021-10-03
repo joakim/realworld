@@ -1,17 +1,11 @@
 <script context="module">
-	load: async ([ :page, :fetch ]) -> {
+	load: async ([ :page, :fetch ]) ->
 		[[ :articles, :pages ], [ tags ]]: await Promise.all [
 			fetch("/articles.json?{ page.query }", [ credentials: 'include' ]).then (r) -> r.json()
 			fetch('/tags.json').then (r) -> r.json()
 		]
-
-		[
-			props:
-				articles
-				pages
-				tags
-		]
-	}
+		
+		[ props: [ :articles, :pages, :tags ] ]
 	
 	(load)
 </script>
@@ -55,7 +49,7 @@
 								href="/?tab=all"
 								rel="prefetch"
 								class="nav-link"
-								class:active={tab = 'all' and not tag}
+								class:active={ tab = 'all' and not tag }
 							>
 								Global Feed
 							</a>
@@ -63,7 +57,7 @@
 
 						{#if $session.user}
 							<li class="nav-item">
-								<a href="/?tab=feed" rel="prefetch" class="nav-link" class:active={tab = 'feed'}>
+								<a href="/?tab=feed" rel="prefetch" class="nav-link" class:active={ tab = 'feed' }>
 									Your Feed
 								</a>
 							</li>
@@ -75,17 +69,17 @@
 
 						{#if tag}
 							<li class="nav-item">
-								<a href="/?tag={tag}" rel="prefetch" class="nav-link active">
+								<a href="/?tag={ tag }" rel="prefetch" class="nav-link active">
 									<i class="ion-pound" />
-									{tag}
+									{ tag }
 								</a>
 							</li>
 						{/if}
 					</ul>
 				</div>
 
-				<ArticleList {articles} />
-				<Pagination {pages} {p} href={(p) -> "/?{page_link_base}&page={p}"} />
+				<ArticleList { articles } />
+				<Pagination { pages } { p } href={ (p) -> "/?{ page_link_base }&page={ p }" } />
 			</div>
 
 			<div class="col-md-3">
@@ -93,7 +87,7 @@
 					<p>Popular Tags</p>
 					<div class="tag-list">
 						{#each tags as tag}
-							<a href="/?tag={tag}" rel="prefetch" class="tag-default tag-pill"> {tag} </a>
+							<a href="/?tag={ tag }" rel="prefetch" class="tag-default tag-pill"> { tag } </a>
 						{/each}
 					</div>
 				</div>
