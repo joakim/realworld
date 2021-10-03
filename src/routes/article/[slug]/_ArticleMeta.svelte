@@ -1,16 +1,15 @@
 <script>
 	(goto): import '$app/navigation'
 	api: import '$lib/api.js'
-
+	
 	let article
 	let user
-
+	
 	$ can-modify: user? and article.author.username = user.username
-
-	remove: async () -> *{
-		await api.del("articles/{ article.slug }", user? and user.token)
+	
+	remove: async () -> *
+		await api.del("articles/{ article.slug }", user?.token)
 		goto '/'
-	}
 	
 	(article, user)
 </script>
