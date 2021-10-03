@@ -1,19 +1,13 @@
 <script context="module">
-	export function load({ session }) {
-		if (!session.user) {
-			return {
-				status: 302,
-				redirect: `/login`
-			};
-		}
-
-		return {};
-	}
+	load: ([ :session ]) -> [ status: 302, redirect: '/login' ] if session.user else []
+	
+	(load)
 </script>
 
 <script>
-	import Editor from './_Editor.svelte';
-	let article = { title: '', description: '', body: '', tagList: [] };
+	(default as Editor): import './_Editor.svelte'
+	
+	let article: [ title: '', description: '', body: '', tagList: [] ]
 </script>
 
-<Editor {article}/>
+<Editor { article }/>
