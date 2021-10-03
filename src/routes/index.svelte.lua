@@ -1,33 +1,34 @@
 <script context="module">
-	export async function load({ page, fetch }) {
-		const [{ articles, pages }, { tags }] = await Promise.all([
-			fetch(`/articles.json?${page.query}`, { credentials: 'include' }).then((r) => r.json()),
-			fetch('/tags.json').then((r) => r.json())
-		]);
+	load: async ([ :page, :fetch ]) -> {
+		[[ :articles, :pages ], [ tags ]]: await Promise.all [
+			fetch("/articles.json?{ page.query }", [ credentials: 'include' ]).then (r) -> r.json()
+			fetch('/tags.json').then (r) -> r.json()
+		]
 
-		return {
-			props: {
-				articles,
-				pages,
+		[
+			props:
+				articles
+				pages
 				tags
-			}
-		};
+		]
 	}
+	
+	(load)
 </script>
 
 <script>
-	import { page, session } from '$app/stores';
-	import ArticleList from '$lib/ArticleList/index.svelte';
-	import Pagination from '$lib/Pagination.svelte';
-
-	export let articles;
-	export let pages;
-	export let tags;
-
-	$: p = +$page.query.get('p') || 1;
-	$: tag = $page.query.get('tag');
-	$: tab = $page.query.get('tab') || 'all';
-	$: page_link_base = tag ? `tag=${tag}` : `tab=${tab}`;
+	(page, session): import '$app/stores'
+	(ArticleList): import '$lib/ArticleList/index.svelte'
+	(Pagination): import '$lib/Pagination.svelte'
+	
+	let articles
+	let pages
+	let tags
+	
+	$ p: +$page.query.get('p') or 1
+	$ tag: $page.query.get('tag')
+	$ tab: $page.query.get('tab') or 'all'
+	$ page_link_base: "tag={ tag }" if tag else "tab={ tab }"
 </script>
 
 <svelte:head>
@@ -35,7 +36,7 @@
 </svelte:head>
 
 <div class="home-page">
-	{#if !$session.user}
+	{#if not $session.user}
 		<div class="banner">
 			<div class="container">
 				<h1 class="logo-font">conduit</h1>
@@ -54,7 +55,7 @@
 								href="/?tab=all"
 								rel="prefetch"
 								class="nav-link"
-								class:active={tab === 'all' && !tag}
+								class:active={tab = 'all' and not tag}
 							>
 								Global Feed
 							</a>
@@ -62,7 +63,7 @@
 
 						{#if $session.user}
 							<li class="nav-item">
-								<a href="/?tab=feed" rel="prefetch" class="nav-link" class:active={tab === 'feed'}>
+								<a href="/?tab=feed" rel="prefetch" class="nav-link" class:active={tab = 'feed'}>
 									Your Feed
 								</a>
 							</li>
@@ -84,7 +85,7 @@
 				</div>
 
 				<ArticleList {articles} />
-				<Pagination {pages} {p} href={(p) => `/?${page_link_base}&page=${p}`} />
+				<Pagination {pages} {p} href={(p) -> "/?{page_link_base}&page={p}"} />
 			</div>
 
 			<div class="col-md-3">
