@@ -1,24 +1,25 @@
 <script context="module">
-	import * as api from '$lib/api.js';
-
-	export async function load({ page, session }) {
-		if (!session.user) {
-			return { redirect: `/login`, status: 302 };
-		}
-
-		const { slug } = page.params;
-		const { article } = await api.get(`articles/${slug}`, null);
-		return {
-			props: { article, slug }
-		};
+	api: import '$lib/api.js'
+	
+	load: async ([ :page, :session ]) -> {
+		if not session.user { return [ redirect: '/login', status: 302 ] }
+		
+		[:slug]: page.params
+		[:article]: await api.get("articles/{ slug }", null)
+		
+		[ props: [ :article, :slug ] ]
 	}
+	
+	(load)
 </script>
 
 <script>
-	import Editor from './_Editor.svelte';
-
-	export let slug;
-	export let article;
+	(default as Editor): import './_Editor.svelte'
+	
+	let slug
+	let article
+	
+	(slug, article)
 </script>
 
-<Editor {article} {slug}/>
+<Editor { article } { slug }/>
