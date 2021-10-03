@@ -1,28 +1,30 @@
 <script context="module">
-	export function load({ error, status }) {
-		return {
-			props: { error, status }
-		};
-	}
+	load: ([ :error, :status ]) ->
+		[ props: [ :error, :status ] ]
+	
+	(load)
 </script>
 
 <script>
-	import { dev } from '$app/env';
-
-	export let error, status;
+	(dev): import '$app/env'
+	
+	let error
+	let status
+	
+	(error, status)
 </script>
 
 <svelte:head>
-	<title>{status}</title>
+	<title>{ status }</title>
 </svelte:head>
 
 <div class="col-md-9">
-	<h1>{status}</h1>
+	<h1>{ status }</h1>
 
-	<p>{error.message}</p>
+	<p>{ error.message }</p>
 
 	{#if dev && error.stack}
-		<pre>{error.stack}</pre>
+		<pre>{ error.stack }</pre>
 	{/if}
 </div>
 
