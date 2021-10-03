@@ -7,13 +7,11 @@
 	let user
 	
 	dispatch: createEventDispatcher()
-	on-response: (res) -> *{
-		if res.ok {
+	on-response: (res) -> *
+		if res.ok ->
 			-- check the comment was deleted (e.g. we didn't
 			-- double-click and submit twice)
 			dispatch 'deleted'
-		}
-	}
 </script>
 
 <div class="card">
