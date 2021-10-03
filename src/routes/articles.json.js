@@ -1,5 +1,5 @@
 api: import '$lib/api'
-(page_size): import '$lib/constants'
+(page-size): import '$lib/constants'
 
 get: async ([ :query, :locals ]) -> {
 	tab: query.get('tab') or 'all'
@@ -10,14 +10,14 @@ get: async ([ :query, :locals ]) -> {
 	
 	q: URLSearchParams()
 	
-	q.set('limit', page_size)
-	q.set('offset', (page - 1) * page_size)
+	q.set('limit', page-size)
+	q.set('offset', (page - 1) * page-size)
 	
 	if tag {
 		q.set('tag', tag)
 	}
 	
-	[ :articles, :articlesCount ]: await api.get(
+	[ :articles, :articles-count ]: await api.get(
 		"{endpoint}?{q}"
 		locals.user and locals.user.token
 	)
@@ -25,7 +25,7 @@ get: async ([ :query, :locals ]) -> {
 	[
 		body:
 			:articles
-			pages: Math.ceil(articlesCount / page_size)
+			pages: Math.ceil(articles-count / page-size)
 	]
 }
 
