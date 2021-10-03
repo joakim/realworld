@@ -1,52 +1,53 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
-	import { placeholder } from '$lib/constants.js';
-	import { ajax } from '$lib/actions.js';
+	(createEventDispatcher): import 'svelte'
+	(placeholder): import '$lib/constants.js'
+	(ajax): import '$lib/actions.js'
+	
+	let slug
+	let user
+	
+	dispatch: createEventDispatcher()
+	
+	let body: ''
+	let submitting: false;
 
-	export let slug;
-	export let user;
-
-	const dispatch = createEventDispatcher();
-
-	let body = '';
-	let submitting = false;
-
-	const onsubmit = () => {
-		submitting = true;
-	};
-
-	const onresponse = async (res) => {
-		if (res.ok) {
-			const comment = await res.json();
-			dispatch('commented', { comment });
-			body = '';
-		} else {
-			// TODO error handling
+	on-submit: () -> *{ set submitting: true }
+	
+	on-response: async (res) -> *{
+		if res.ok {
+			comment: await res.json()
+			dispatch('commented', [ :comment ])
+			body: ''
+		}
+		else {
+			-- TODO error handling
 		}
 
-		submitting = false;
-	};
+		set submitting: false
+	}
+	
+	(slug, user)
 </script>
 
 <form
-	action="/article/{slug}/comments.json"
+	action="/article/{ slug }/comments.json"
 	method="post"
 	class="card comment-form"
-	use:ajax={{ onsubmit, onresponse }}
+	use:ajax={ [:on-submit, :on-response] }
 >
 	<div class="card-block">
 		<textarea
-			disabled={submitting}
+			disabled={ submitting }
 			class="form-control"
 			name="comment"
 			placeholder="Write a comment..."
-			bind:value={body}
+			bind:value={ body }
 			rows="3"
 		/>
 	</div>
 
 	<div class="card-footer">
-		<img src={user.image || placeholder} class="comment-author-img" alt={user.username} />
-		<button disabled={submitting} class="btn btn-sm btn-primary" type="submit">Post Comment</button>
+		<img src={ user.image or placeholder } class="comment-author-img" alt={ user.username } />
+		<button disabled={ submitting } class="btn btn-sm btn-primary" type="submit">Post Comment</button>
 	</div>
 </form>
