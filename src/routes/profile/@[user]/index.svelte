@@ -1,12 +1,16 @@
 <script context="module">
-	import { create_load } from './_load.js';
-	export const load = create_load('articles');
+	[ :create-load ]: import './_load.js'
+	load: create-load 'articles'
+	
+	(load)
 </script>
 
 <script>
-	import ArticleList from '$lib/ArticleList/index.svelte';
+	ArticleList: import '$lib/ArticleList/index.svelte'
 
-	export let articles;
+	let articles
+	
+	(articles)
 </script>
 
-<ArticleList {articles} />
+<ArticleList { articles } />
