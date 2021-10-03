@@ -38,7 +38,7 @@
 				action="/article/{ slug }/comments/{ comment.id }.json?_method=delete"
 				method="post"
 				class="mod-options"
-				use:ajax={ [:onresponse] }
+				use:ajax={ [:on-response] }
 			>
 				<button class="ion-trash-a" />
 			</form>
