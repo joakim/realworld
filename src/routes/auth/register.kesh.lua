@@ -1,4 +1,4 @@
-api: '$lib/api.js'
+api: import '$lib/api.js'
 (respond): import './_respond'
 
 post: async (request) -> {
