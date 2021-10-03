@@ -1,40 +1,42 @@
 <script context="module">
-	export async function load({ page, fetch }) {
-		const { slug } = page.params;
-		const [article, comments] = await Promise.all([
-			fetch(`/article/${slug}.json`).then((r) => r.json()),
-			fetch(`/article/${slug}/comments.json`).then((r) => r.json())
-		]);
-
-		return {
-			props: { article, comments, slug }
-		};
+	load: async ([ :page, :fetch ]) -> {
+		[:slug]: page.params
+		[article, comments]: await Promise.all [
+			fetch "/article/{ slug }.json").then (r) -> r.json()
+			fetch "/article/{ slug }/comments.json").then (r) -> r.json()
+		]
+		
+		[ props: [ :article, :comments, :slug ] ]
 	}
+	
+	(load)
 </script>
 
 <script>
-	import { session } from '$app/stores';
-	import marked from 'marked';
-
-	import ArticleMeta from './_ArticleMeta.svelte';
-	import CommentContainer from './_CommentContainer.svelte';
-
-	export let article;
-	export let comments;
-	export let slug;
-
-	$: markup = marked(article.body);
+	(session): import '$app/stores'
+	(default as marked): import 'marked'
+	
+	(default as ArticleMeta): './_ArticleMeta.svelte'
+	(default as CommentContainer): './_CommentContainer.svelte'
+	
+	let article
+	let comments
+	let slug
+	
+	$ markup: marked article.body
+	
+	(article, comments, slug)
 </script>
 
 <svelte:head>
-	<title>{article.title}</title>
+	<title>{ article.title }</title>
 </svelte:head>
 
 <div class="article-page">
 	<div class="banner">
 		<div class="container">
-			<h1>{article.title}</h1>
-			<ArticleMeta {article} user={$session.user} />
+			<h1>{ article.title }</h1>
+			<ArticleMeta { article } user={ $session.user } />
 		</div>
 	</div>
 
@@ -47,7 +49,7 @@
 
 				<ul class="tag-list">
 					{#each article.tagList as tag}
-						<li class="tag-default tag-pill tag-outline">{tag}</li>
+						<li class="tag-default tag-pill tag-outline">{ tag }</li>
 					{/each}
 				</ul>
 			</div>
@@ -58,7 +60,7 @@
 		<div class="article-actions" />
 
 		<div class="row">
-			<CommentContainer {slug} {comments} user={$session.user} errors={[]} />
+			<CommentContainer { slug } { comments } user={ $session.user } errors={ [] } />
 		</div>
 	</div>
 </div>
