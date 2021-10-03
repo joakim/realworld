@@ -2,8 +2,8 @@
 	load: async ([ :page, :fetch ]) ->
 		[:slug]: page.params
 		[article, comments]: await Promise.all [
-			fetch "/article/{ slug }.json").then (r) -> r.json()
-			fetch "/article/{ slug }/comments.json").then (r) -> r.json()
+			fetch("/article/{ slug }.json").then (r) -> r.json()
+			fetch("/article/{ slug }/comments.json").then (r) -> r.json()
 		]
 		[ props: [ :article, :comments, :slug ] ]
 	
