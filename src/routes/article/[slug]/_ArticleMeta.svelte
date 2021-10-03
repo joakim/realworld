@@ -1,37 +1,37 @@
 <script>
-	import { goto } from '$app/navigation';
-	import * as api from '$lib/api.js';
+	(goto): import '$app/navigation'
+	api: import '$lib/api.js'
 
-	export let article;
-	export let user;
+	let article
+	let user
 
-	$: can_modify = user && article.author.username === user.username;
+	$ can-modify: user? and article.author.username = user.username
 
-	async function remove() {
-		await api.del(`articles/${article.slug}`, user && user.token);
-		goto('/');
+	remove: async () -> *{
+		await api.del("articles/{ article.slug }", user? and user.token)
+		goto '/'
 	}
 </script>
 
 <div class="article-meta">
-	<a href='/profile/@{article.author.username}'>
-		<img src={article.author.image} alt={article.author.username} />
+	<a href='/profile/@{ article.author.username }'>
+		<img src={ article.author.image } alt={ article.author.username } />
 	</a>
 
 	<div class="info">
-		<a href='/profile/@{article.author.username}' class="author"> {article.author.username}</a>
+		<a href='/profile/@{ article.author.username }' class="author"> { article.author.username }</a>
 		<span class="date">
-			{new Date(article.createdAt).toDateString()}
+			{ Date(article.createdAt).toDateString() }
 		</span>
 	</div>
 
-	{#if can_modify}
+	{#if can-modify}
 		<span>
-			<a href='/editor/{article.slug}' class="btn btn-outline-secondary btn-sm">
+			<a href='/editor/{ article.slug }' class="btn btn-outline-secondary btn-sm">
 				<i class="ion-edit"/> Edit Article
 			</a>
 
-			<button class="btn btn-outline-danger btn-sm" on:click='{remove}'>
+			<button class="btn btn-outline-danger btn-sm" on:click='{ remove }'>
 				<i class="ion-trash-a"/> Delete Article
 			</button>
 		</span>
