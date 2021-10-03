@@ -21,7 +21,7 @@
 
 	<p>{ error.message }</p>
 
-	{#if dev && error.stack}
+	{#if dev and error.stack}
 		<pre>{ error.stack }</pre>
 	{/if}
 </div>
