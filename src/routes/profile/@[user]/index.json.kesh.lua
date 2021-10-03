@@ -6,4 +6,4 @@ get: async ([ :params, :locals ]) -> {
 	[ body: profile ]
 }
 
-(load)
+(get)
