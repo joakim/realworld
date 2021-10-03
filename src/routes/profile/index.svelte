@@ -1,8 +1,8 @@
 <script context="module">
-	export function load({ session }) {
-		return {
-			status: 302,
-			redirect: session.user ? `/profile/@${session.user.username}` : '/login'
-		};
-	}
+	load: ([ :session ]) -> [
+		status: 302
+		redirect: "/profile/@{ session.user.username }" if session.user else '/login'
+	]
+	
+	(load)
 </script>
