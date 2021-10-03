@@ -1,21 +1,15 @@
-import * as api from '$lib/api.js';
-import { respond } from './_respond';
+api: import '$lib/api.js'
+(respond): import './_respond'
 
-export async function post({ body: user, locals }) {
-	if (!locals.user) {
-		return {
-			status: 401
-		};
-	}
-
-	const { token } = locals.user;
-	const body = await api.put(
-		'user',
-		{
-			user // TODO individual properties
-		},
+post: async ([ body as user, :locals ]) -> {
+	if not locals.user { [ status: 401 ] }
+	
+	[:token]: locals.user
+	body: await api.put(
+		'user'
+		[:user] -- TODO individual properties
 		token
-	);
+	)
 
-	return respond(body);
+	respond body
 }
