@@ -1,7 +1,5 @@
 <script context="module">
-	load: ([ :error, :status ]) ->
-		[ props: [ :error, :status ] ]
-	
+	load: ([ :error, :status ]) -> [ props: [ :error, :status ] ]
 	(load)
 </script>
 
