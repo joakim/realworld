@@ -1,52 +1,55 @@
 <script context="module">
-	export async function load({ page, fetch }) {
-		const res = await fetch(`/profile/@${page.params.user}.json`);
-
-		return {
-			props: {
+	load: async ([ :page, :fetch ]) -> {
+		res: await fetch "/profile/@{ page.params.user }.json"
+		
+		[
+			props:
 				profile: await res.json()
-			}
-		};
+		]
 	}
+	
+	(load)
 </script>
 
 <script>
-	import { page, session } from '$app/stores';
+	[ :page, :session ]: import '$app/stores'
 
-	export let profile;
+	let profile
 
-	// TODO would be nice to have a more idiomatic solution to this —
-	// https://github.com/sveltejs/kit/issues/269
-	$: segments = $page.path.split('/');
-	$: is_favorites = segments.length === 4 && segments[3] === 'favorites';
-	$: is_user = $session.user && profile.username === $session.user.username;
+	-- TODO would be nice to have a more idiomatic solution to this —
+	-- https://github.com/sveltejs/kit/issues/269
+	$ segments: $page.path.split '/'
+	$ is-favorites: segments.length = 4 and segments.3 = 'favorites'
+	$ is-user: $session.user and profile.username = $session.user.username
+	
+	let current-token
+	toggle_following: async () -> {
+		token: (set current-token: [:])
+		
+		[ :following, :username ]: profile
+		
+		-- optimistic UI
+		set profile.following: not profile.following
+		
+		res: await fetch("/profile/@{ username }/follow", [
+			method: 'delete' if following else 'post'
+		])
 
-	let current_token;
-	async function toggle_following() {
-		const token = (current_token = {});
+		result: await res.json()
 
-		const { following, username } = profile;
-
-		// optimistic UI
-		profile.following = !profile.following;
-
-		const res = await fetch(`/profile/@${username}/follow`, {
-			method: following ? 'delete' : 'post'
-		});
-
-		const result = await res.json();
-
-		// synchronise with the server, in case it disagrees
-		// with our optimistic UI for some reason — but only
-		// if the button wasn't re-toggled in the meantime
-		if (token === current_token) {
-			profile = result.profile;
+		-- synchronise with the server, in case it disagrees
+		-- with our optimistic UI for some reason — but only
+		-- if the button wasn't re-toggled in the meantime
+		if token = current-token {
+			set profile: result.profile
 		}
 	}
+	
+	(profile)
 </script>
 
 <svelte:head>
-	<title>{profile.username} • Conduit</title>
+	<title>{ profile.username } • Conduit</title>
 </svelte:head>
 
 <div class="profile-page">
@@ -54,23 +57,23 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-md-10 offset-md-1">
-					<img src={profile.image} class="user-img" alt={profile.username} />
-					<h4>{profile.username}</h4>
-					<p>{profile.bio}</p>
+					<img src={ profile.image } class="user-img" alt={ profile.username } />
+					<h4>{ profile.username }</h4>
+					<p>{ profile.bio }</p>
 
-					{#if is_user}
+					{#if is-user}
 						<a href="/settings" class="btn btn-sm btn-outline-secondary action-btn">
 							<i class="ion-gear-a" />
 							Edit Profile Settings
 						</a>
 					{:else if $session.user}
 						<button
-							class="btn btn-sm action-btn {profile.following ? 'btn-secondary' : 'btn-outline-secondary'}"
-							on:click={toggle_following}
+							class="btn btn-sm action-btn { 'btn-secondary' if profile.following else 'btn-outline-secondary' }"
+							on:click={ toggle-following }
 						>
 							<i class="ion-plus-round" />
-							{profile.following ? 'Unfollow' : 'Follow'}
-							{profile.username}
+							{ 'Unfollow' if profile.following else 'Follow' }
+							{ profile.username }
 						</button>
 					{:else}<a href="/login">Sign in to follow</a>{/if}
 				</div>
@@ -85,19 +88,19 @@
 					<ul class="nav nav-pills outline-active">
 						<li class="nav-item">
 							<a
-								href="/profile/@{profile.username}"
+								href="/profile/@{ profile.username }"
 								class="nav-link"
 								rel="prefetch"
-								class:active={!is_favorites}
+								class:active={ not is-favorites }
 							>Articles</a>
 						</li>
 
 						<li class="nav-item">
 							<a
-								href="/profile/@{profile.username}/favorites"
+								href="/profile/@{ profile.username }/favorites"
 								class="nav-link"
 								rel="prefetch"
-								class:active={is_favorites}
+								class:active={ is-favorites }
 							>Favorites</a>
 						</li>
 					</ul>
