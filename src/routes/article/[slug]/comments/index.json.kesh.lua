@@ -9,7 +9,8 @@ get: async ([ :params, :locals ]) ->
 	[ body: comments ]
 
 post: async ([ :params, body as form, :headers, :locals ]) ->
-	if not locals.user? -> return [ status: 401 ]
+	if not locals.user?
+		return [ status: 401 ]
 	
 	[:slug]: params
 	body: form.get 'comment'
@@ -21,7 +22,7 @@ post: async ([ :params, body as form, :headers, :locals ]) ->
 	)
 	
 	-- for AJAX requests, return the newly created comment
-	if headers.accept = 'application/json' ->
+	if headers.accept = 'application/json'
 		return [ status: 201, body: comment ]
 
 	-- for traditional (no-JS) form submissions, redirect
