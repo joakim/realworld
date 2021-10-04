@@ -15,11 +15,11 @@
 		set submitting: true
 	
 	on-response: async (res) *->
-		if res.ok? ->
+		if res.ok?
 			comment: await res.json()
 			dispatch('commented', [ :comment ])
 			body: ''
-		else ->
+		else
 			-- TODO error handling
 		
 		set submitting: false
