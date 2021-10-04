@@ -7,8 +7,7 @@
 	let user
 	
 	dispatch: createEventDispatcher()
-	on-response: (res) *->
-		if res.ok? -> dispatch 'deleted'
+	on-response: (res) *-> if res.ok? { dispatch 'deleted' }
 </script>
 
 <div class="card">
