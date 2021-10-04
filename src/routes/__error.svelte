@@ -9,7 +9,7 @@
 	let error
 	let status
 	
-	(error, status)
+	[:error, :status]
 </script>
 
 <svelte:head>
