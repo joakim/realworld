@@ -2,7 +2,8 @@ api: import '$lib/api.js'
 (respond): import './_respond'
 
 post: async ([ body as user, :locals ]) ->
-	if not locals.user? -> return [ status: 401 ]
+	if not locals.user?
+		return [ status: 401 ]
 	
 	[:token]: locals.user
 	body: await api.put(
