@@ -1,7 +1,7 @@
 <script>
 	let count: 0
 	
-	increment: () *-> set count: count + 1
+	increment: () *-> set count: + 1
 </script>
 
 <button on:click={ increment }>
