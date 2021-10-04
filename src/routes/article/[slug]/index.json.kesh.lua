@@ -6,6 +6,7 @@ get: async ([ :params, :locals ]) ->
 	
 	[ body: article ]
 
-put: async (request) *-> print('put', request)
+put: async (request) *->
+	print('put', request)
 
 (get, put)
