@@ -1,23 +1,25 @@
 <script>
-	import * as api from '$lib/api.js';
-
-	export let article;
-	export let user;
-
-	async function toggle_favorite() {
-		// optimistic UI
-		if (article.favorited) {
-			article.favoritesCount -= 1;
-			article.favorited = false;
-		} else {
-			article.favoritesCount += 1;
-			article.favorited = true;
-		}
-
-		({ article } = await (article.favorited
-			? api.post(`articles/${article.slug}/favorite`, null, user && user.token)
-			: api.del(`articles/${article.slug}/favorite`, user && user.token)));
-	}
+	api: import '$lib/api.js'
+	
+	let article
+	let user
+	
+	toggle-favorite: async () *->
+		-- optimistic UI
+		if article.favorited? ->
+			set article.favoritesCount: - 1
+			set article.favorited: false
+		else ->
+			set article.favoritesCount: + 1
+			set article.favorited: true
+		
+		[ :article ]: await ->
+		 	if article.favorited? ->
+				api.post("articles/{ article.slug }/favorite", null, user.token)
+			else ->
+				api.del("articles/{ article.slug }/favorite", user.token)
+	
+	(article, user)
 </script>
 
 <div class="article-preview">
