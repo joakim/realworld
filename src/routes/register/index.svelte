@@ -6,9 +6,9 @@
 </script>
 
 <script>
-	[ session ]: import '$app/stores'
-	[ goto ]: import '$app/navigation'
-	[ post ]: import '$lib/utils.js'
+	[:session]: import '$app/stores'
+	(goto): import '$app/navigation'
+	(post): import '$lib/utils.js'
 	(default as ListErrors): import '$lib/ListErrors.svelte'
 	
 	let username: ''
@@ -22,7 +22,7 @@
 		-- TODO handle network errors
 		set errors: response.errors
 		
-		if response.user? ->
+		if response.user?
 			set $session.user: response.user
 			goto '/'
 </script>
