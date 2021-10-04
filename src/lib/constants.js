@@ -1,2 +1,4 @@
-export const page_size = 10;
-export const placeholder = 'https://static.productionready.io/images/smiley-cyrus.jpg';
+page-size: 10
+placeholder: 'https://static.productionready.io/images/smiley-cyrus.jpg'
+
+(page-size, placeholder)
