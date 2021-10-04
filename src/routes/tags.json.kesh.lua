@@ -1,7 +1,7 @@
 api: import '$lib/api'
 
 get: async () ->
-	[ :tags ]: await api.get('tags')
+	[ :tags ]: await api.get 'tags'
 	
 	-- The Conduit API doesn't set a cache-control header on
 	-- this resource, but it doesn't change frequently enough
