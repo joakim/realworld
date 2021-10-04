@@ -19,7 +19,7 @@
 	
 	let current-token
 	toggle_following: async () *->
-		token: (set current-token: [])
+		token: { set current-token: [] }
 		
 		[ :following, :username ]: profile
 		
@@ -35,7 +35,8 @@
 		-- synchronise with the server, in case it disagrees
 		-- with our optimistic UI for some reason — but only
 		-- if the button wasn't re-toggled in the meantime
-		if token = current-token -> set profile: result.profile
+		if token = current-token
+			set profile: result.profile
 	
 	(profile)
 </script>
