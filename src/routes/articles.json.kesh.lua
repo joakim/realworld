@@ -13,10 +13,11 @@ get: async ([ :query, :locals ]) ->
 	q.set('limit', page-size)
 	q.set('offset', (page - 1) * page-size)
 	
-	if tag? -> q.set('tag', tag)
+	if tag?
+		q.set('tag', tag)
 	
 	[ :articles, :articles-count ]: await api.get(
-		"{endpoint}?{q}"
+		"{ endpoint }?{ q }"
 		locals.user.token
 	)
 	
