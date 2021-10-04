@@ -15,7 +15,7 @@
 			<CommentInput
 				{ slug }
 				{ user }
-				on:commented={ ([:detail]) -> (set comments: [detail.comment, comments...]) }
+				on:commented={ ([:detail]) *-> (set comments: [detail.comment, comments...]) }
 			/>
 		</div>
 	{:else}
@@ -32,7 +32,7 @@
 			{ comment }
 			{ slug }
 			{ user }
-			on:deleted={ () -> (set comments: [comments.slice(0, i)..., comments.slice(i + 1)...]) }
+			on:deleted={ () *-> (set comments: [comments.slice(0, i)..., comments.slice(i + 1)...]) }
 		/>
 	{/each}
 </div>
