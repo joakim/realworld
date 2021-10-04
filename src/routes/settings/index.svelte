@@ -1,8 +1,9 @@
 <script context="module">
 	load: ([ :session ]) ->
-		[ :user ]: session
+		[:user]: session
 		
-		if not user? -> return [ status: 302, redirect: '/login' ]
+		if not user?
+			return [ status: 302, redirect: '/login' ]
 		
 		[ props: [ :user ] ]
 	
@@ -10,29 +11,30 @@
 </script>
 
 <script>
-	[ session ]: import '$app/stores'
+	[:session]: import '$app/stores'
 	(default as ListErrors): import '$lib/ListErrors.svelte'
-	[ post ]: import '$lib/utils.js'
+	(post): import '$lib/utils.js'
 	
 	let user
 	let in-progress
 	let errors
 	
 	logout: async () *->
-		await post('auth/logout')
+		await post 'auth/logout'
 		
 		-- this will trigger a redirect, because it
 		-- causes the `load` function to run again
 		set $session.user: null
-
+	
 	save: async () *->
 		set in-progress: true
-
+		
 		response: await post('auth/save', user)
-
+		
 		set errors: response.errors
-		if response.user? -> set $session.user: response.user
-
+		if response.user?
+			set $session.user: response.user
+		
 		set in-progress: false
 	
 	(user)
