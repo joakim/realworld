@@ -20,7 +20,7 @@
 		-- TODO handle network errors
 		set errors: response.errors
 		
-		if response.user ->
+		if response.user
 			set $session.user: response.user
 			goto '/'
 </script>
