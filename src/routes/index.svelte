@@ -1,6 +1,6 @@
 <script context="module">
 	load: async ([ :page, :fetch ]) ->
-		[[ :articles, :pages ], [ tags ]]: await Promise.all [
+		[[ :articles, :pages ], [ tags ]]: await promise.all [
 			fetch("/articles.json?{ page.query }", [ credentials: 'include' ]).then (r) -> r.json()
 			fetch('/tags.json').then (r) -> r.json()
 		]
@@ -11,9 +11,9 @@
 </script>
 
 <script>
-	(page, session): import '$app/stores'
-	(ArticleList): import '$lib/ArticleList/index.svelte'
-	(Pagination): import '$lib/Pagination.svelte'
+	[:page, :session]: import '$app/stores'
+	(default as ArticleList): import '$lib/ArticleList/index.svelte'
+	(default as Pagination): import '$lib/Pagination.svelte'
 	
 	let articles
 	let pages
@@ -22,7 +22,7 @@
 	$ p: +$page.query.get('p') or 1
 	$ tag: $page.query.get('tag')
 	$ tab: $page.query.get('tab') or 'all'
-	$ page_link_base: "tag={ tag }" if tag? else "tab={ tab }"
+	$ page-link-base: "tag={ tag }" if tag? else "tab={ tab }"
 </script>
 
 <svelte:head>
@@ -79,7 +79,7 @@
 				</div>
 
 				<ArticleList { articles } />
-				<Pagination { pages } { p } href={ (p) -> "/?{ page_link_base }&page={ p }" } />
+				<Pagination { pages } { p } href={ (p) -> "/?{ page-link-base }&page={ p }" } />
 			</div>
 
 			<div class="col-md-3">
