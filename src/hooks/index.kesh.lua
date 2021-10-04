@@ -7,7 +7,7 @@ handle: async ([ :request, :resolve ]) ->
 	await resolve request
 
 get-session: ([ :locals ]) -> [
-	user: locals.user and {
+	user: locals.user and [
 		username: locals.user.username
 		email: locals.user.email
 		image: locals.user.image
