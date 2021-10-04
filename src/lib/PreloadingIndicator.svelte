@@ -1,16 +1,15 @@
 <script>
-	import { onMount } from 'svelte';
-	let p = 0;
-	let visible = false;
-	onMount(() => {
-		visible = true;
-		function next() {
-			p += 0.1;
-			const remaining = 1 - p;
-			if (remaining > 0.15) setTimeout(next, 500 / remaining);
-		}
-		setTimeout(next, 250);
-	});
+	(onMount): import 'svelte'
+	let p: 0
+	let visible: false
+	onMount () *->
+		visible: true
+		next: () *->
+			p: p + 0.1
+			remaining: 1 - p
+			if remaining > 0.15 ->
+				setTimeout(next, 500 / remaining)
+		setTimeout(next, 250)
 </script>
 
 <style>
@@ -58,7 +57,7 @@
 
 {#if visible}
 	<div class="progress-container">
-		<div class="progress" style="width: {p * 100}%" />
+		<div class="progress" style="width: { p * 100 }%" />
 	</div>
 {/if}
 
