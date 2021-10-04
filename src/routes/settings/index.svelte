@@ -18,14 +18,14 @@
 	let in-progress
 	let errors
 	
-	logout: async () -> *
+	logout: async () *->
 		await post('auth/logout')
 		
 		-- this will trigger a redirect, because it
 		-- causes the `load` function to run again
 		set $session.user: null
 
-	save: async () -> *
+	save: async () *->
 		set in-progress: true
 
 		response: await post('auth/save', user)
