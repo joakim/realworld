@@ -14,7 +14,7 @@
 	let password: ''
 	let errors: null
 	
-	submit: async (event) -> *
+	submit: async (event) *->
 		response: await post('auth/login', [ :email, :password ])
 		
 		-- TODO handle network errors
