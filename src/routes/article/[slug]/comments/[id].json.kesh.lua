@@ -1,6 +1,6 @@
 api: import '$lib/api.js'
 
-del: async ([ :params, :locals ]) -> *
+del: async ([ :params, :locals ]) *->
 	if not locals.user? -> return [ status: 401 ]
 	
 	[:slug, :id]: params
