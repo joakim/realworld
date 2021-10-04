@@ -1,40 +1,24 @@
-const base = 'https://conduit.productionready.io/api';
+base: 'https://conduit.productionready.io/api'
 
-async function send({ method, path, data, token }) {
-	const opts = { method, headers: {} };
+send: async ([ :method, :path, :data, :token ]) ->
+	opts: [ :method, headers: [] ]
+	
+	if data? ->
+		set opts.headers.'Content-Type': 'application/json'
+		set opts.body: JSON.stringify data
+	
+	if token? ->
+		set opts.headers.'Authorization': "Token { token }"
+	
+	fetch("{ base }/{ path }", opts)
+		.then (r) -> r.text()
+		.then (json) ->
+			try -> JSON.parse json
+			catch err -> json
 
-	if (data) {
-		opts.headers['Content-Type'] = 'application/json';
-		opts.body = JSON.stringify(data);
-	}
+get: (path, token) -> send [ method: 'GET', :path, :token ]
+del: (path, token) -> send [ method: 'DELETE', :path, :token ]
+post: (path, data, token) -> send [ method: 'POST', :path, :data, :token ]
+put: (path, data, token) -> send [ method: 'PUT', :path, :data, :token ]
 
-	if (token) {
-		opts.headers['Authorization'] = `Token ${token}`;
-	}
-
-	return fetch(`${base}/${path}`, opts)
-		.then((r) => r.text())
-		.then((json) => {
-			try {
-				return JSON.parse(json);
-			} catch (err) {
-				return json;
-			}
-		});
-}
-
-export function get(path, token) {
-	return send({ method: 'GET', path, token });
-}
-
-export function del(path, token) {
-	return send({ method: 'DELETE', path, token });
-}
-
-export function post(path, data, token) {
-	return send({ method: 'POST', path, data, token });
-}
-
-export function put(path, data, token) {
-	return send({ method: 'PUT', path, data, token });
-}
+(get, del, post, put)
