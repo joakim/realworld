@@ -9,14 +9,14 @@
 	[ session ]: import '$app/stores'
 	[ goto ]: import '$app/navigation'
 	[ post ]: import '$lib/utils.js'
-	ListErrors: import '$lib/ListErrors.svelte'
+	(default as ListErrors): import '$lib/ListErrors.svelte'
 	
 	let username: ''
 	let email: ''
 	let password: ''
 	let errors: null
 	
-	submit: async (event) ->
+	submit: async (event) *->
 		response: await post('auth/register', [ :username, :email, :password ])
 		
 		-- TODO handle network errors
