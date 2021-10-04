@@ -6,7 +6,7 @@
 </script>
 
 <script>
-	ArticleList: import '$lib/ArticleList/index.svelte'
+	(default as ArticleList): import '$lib/ArticleList/index.svelte'
 
 	let articles
 	
