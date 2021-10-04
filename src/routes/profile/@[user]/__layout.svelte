@@ -18,7 +18,7 @@
 	$ is-user: $session.user and profile.username = $session.user.username
 	
 	let current-token
-	toggle_following: async () -> *
+	toggle_following: async () *->
 		token: (set current-token: [])
 		
 		[ :following, :username ]: profile
@@ -31,7 +31,7 @@
 		])
 		
 		result: await res.json()
-
+		
 		-- synchronise with the server, in case it disagrees
 		-- with our optimistic UI for some reason — but only
 		-- if the button wasn't re-toggled in the meantime
