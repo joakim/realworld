@@ -45,7 +45,7 @@
 				<form
 					action={ "/article/{ slug }.json?_method=put" if slug else '/article.json' }
 					method="post"
-					use:ajax={ [:on-submit, :on-response] }
+					use:ajax={ (on-submit, on-response) }
 				>
 					<fieldset>
 						<fieldset class="form-group">
