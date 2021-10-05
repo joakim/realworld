@@ -6,7 +6,7 @@
 			fetch("/article/{ slug }/comments.json").then (r) -> r.json()
 		]
 		
-		(props: [ :article, :comments, :slug ])
+		[ props: [ :article, :comments, :slug ] ]
 	
 	(load)
 </script>
