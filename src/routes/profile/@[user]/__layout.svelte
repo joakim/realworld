@@ -3,13 +3,13 @@
 		res: await fetch "/profile/@{ page.params.user }.json"
 		profile: await res.json()
 		
-		(props: (profile))
+		[props: [profile]]
 	
-	(load)
+	[load]
 </script>
 
 <script>
-	(page, session): import '$app/stores'
+	[page, session]: import '$app/stores'
 	
 	let profile
 	
@@ -40,7 +40,7 @@
 		if token = current-token
 			set profile: result.profile
 	
-	(profile)
+	[profile]
 </script>
 
 <svelte:head>
