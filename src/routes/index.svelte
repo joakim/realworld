@@ -1,6 +1,6 @@
 <script context="module">
 	load: async ([ :page, :fetch ]) ->
-		[[:articles, :pages], [tags]]: await promise.all [
+		[[:articles, :pages], [:tags]]: await promise.all [
 			fetch("/articles.json?{ page.query }", [ credentials: 'include' ]).then (r) -> r.json()
 			fetch('/tags.json').then (r) -> r.json()
 		]
