@@ -3,11 +3,11 @@ base: 'https://conduit.productionready.io/api'
 send: async ([ :method, :path, :data, :token ]) ->
 	opts: [ :method, headers: [] ]
 	
-	if data? ->
+	if data?
 		set opts.headers.'Content-Type': 'application/json'
 		set opts.body: JSON.stringify data
 	
-	if token? ->
+	if token?
 		set opts.headers.'Authorization': "Token { token }"
 	
 	fetch("{ base }/{ path }", opts)
