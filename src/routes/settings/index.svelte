@@ -1,11 +1,11 @@
 <script context="module">
-	load: ([ :session ]) ->
-		[:user]: session
+	load: [session] ->
+		[user]: session
 		
 		if not user?
-			return [ status: 302, redirect: '/login' ]
+			return (status: 302, redirect: '/login')
 		
-		[ props: [ :user ] ]
+		(props: (user))
 	
 	(load)
 </script>
