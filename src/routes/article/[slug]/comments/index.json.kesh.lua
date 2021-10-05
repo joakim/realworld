@@ -1,14 +1,15 @@
 api: import '$lib/api.js'
 
-get: async ([ params, locals ]) ->
+get: async [params, locals] ->
 	[slug]: params
 	[comments]: await api.get(
 		"articles/{ slug }/comments"
 		locals.user? and locals.user.token?
 	)
+	
 	[ body: comments ]
 
-post: async ([ params, body as form, headers, locals ]) ->
+post: async [params, body as form, headers, locals] ->
 	if not locals.user?
 		return [ status: 401 ]
 	
