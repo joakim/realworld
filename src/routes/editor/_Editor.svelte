@@ -23,7 +23,7 @@
 		set publishing: true
 	
 	on-response: async (res) *->
-		if res.ok { goto res.headers.get 'location' }
+		if res.ok? { goto res.headers.get 'location' }
 		
 	enter: (node, callback) ->
 		on-keydown: (event) *->
