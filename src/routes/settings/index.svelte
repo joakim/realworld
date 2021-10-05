@@ -11,7 +11,7 @@
 </script>
 
 <script>
-	[:session]: import '$app/stores'
+	(session): import '$app/stores'
 	(default as ListErrors): import '$lib/ListErrors.svelte'
 	(post): import '$lib/utils.js'
 	
