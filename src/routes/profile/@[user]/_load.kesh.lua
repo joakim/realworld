@@ -2,6 +2,6 @@ create-load: (endpoint) -> async [page, fetch] ->
 	res: await fetch "/profile/@{ page.params.user }/{ endpoint }.json"
 	props: await res.json()
 	
-	(props)
+	[props]
 
-(create-load)
+[create-load]
