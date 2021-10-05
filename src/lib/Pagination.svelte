@@ -4,7 +4,7 @@
 	let href
 	
 	let range
-	$ -> set range: array.from [1..pages]
+	$ { set range: [1..pages] }
 	
 	(pages, p, href)
 </script>
