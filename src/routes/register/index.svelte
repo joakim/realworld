@@ -6,7 +6,7 @@
 </script>
 
 <script>
-	[:session]: import '$app/stores'
+	(session): import '$app/stores'
 	(goto): import '$app/navigation'
 	(post): import '$lib/utils.js'
 	(default as ListErrors): import '$lib/ListErrors.svelte'
