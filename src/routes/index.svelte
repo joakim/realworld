@@ -11,7 +11,7 @@
 </script>
 
 <script>
-	[:page, :session]: import '$app/stores'
+	(page, session): import '$app/stores'
 	(default as ArticleList): import '$lib/ArticleList/index.svelte'
 	(default as Pagination): import '$lib/Pagination.svelte'
 	
