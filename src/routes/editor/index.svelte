@@ -1,5 +1,5 @@
 <script context="module">
-	load: ([ :session ]) -> [ status: 302, redirect: '/login' ] if session.user else []
+	load: ([ :session ]) -> [ status: 302, redirect: '/login' ] if session.user? else []
 	
 	(load)
 </script>
