@@ -1,5 +1,5 @@
 <script>
-	[:session]: import '$app/stores'
+	(session): import '$app/stores'
 	(default as ArticlePreview): import './ArticlePreview.svelte'
 	
 	let articles
