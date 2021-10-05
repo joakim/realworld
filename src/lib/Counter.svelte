@@ -1,6 +1,5 @@
 <script>
 	let count: 0
-	
 	increment: () *-> set count: + 1
 </script>
 
