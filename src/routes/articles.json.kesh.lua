@@ -4,7 +4,7 @@ api: import '$lib/api'
 get: async [query, locals] ->
 	tab: query.get('tab') ? 'all'
 	tag: query.get('tag')
-	page: #number query.get('page') ? 1
+	page: +query.get('page') ? 1
 	
 	endpoint: 'articles/feed' if tab = 'feed' else 'articles'
 	
