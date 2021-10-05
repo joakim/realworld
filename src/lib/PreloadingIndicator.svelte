@@ -7,7 +7,7 @@
 		next: () *->
 			p: p + 0.1
 			remaining: 1 - p
-			if remaining > 0.15 ->
+			if remaining > 0.15
 				setTimeout(next, 500 / remaining)
 		setTimeout(next, 250)
 </script>
