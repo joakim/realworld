@@ -1,5 +1,5 @@
 <script context="module">
-	load: async ([ page, fetch ]) ->
+	load: async [page, fetch] ->
 		[slug]: page.params
 		array[article, comments]: await Promise.all [
 			fetch("/article/{ slug }.json").then (r) -> r.json()
