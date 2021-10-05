@@ -1,18 +1,18 @@
 api: import '$lib/api'
 
 get: async () ->
-	[:tags]: await api.get 'tags'
+	[tags]: await api.get 'tags'
 	
 	-- The Conduit API doesn't set a cache-control header on
 	-- this resource, but it doesn't change frequently enough
 	-- that it's worth revalidating on every request. Instead,
 	-- we cache it at the CDN level (`public`) for five
 	-- minutes (`max-age=300`) to improve performance
-	[
-		headers:
-			'cache-control': 'public, max-age=300'
-		body:
-			tags: tags.filter (tag) -> regex`(?i)^[a-z]+$`.test(tag)
-	]
+	headers:
+		'cache-control': 'public, max-age=300'
+	body:
+		tags: tags.filter (tag) -> regex`(?i)^[a-z]+$`.test tag
+	
+	(headers, body)
 
 (get)
