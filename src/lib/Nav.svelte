@@ -1,5 +1,5 @@
 <script>
-	[:page, :session]: import '$app/stores'
+	(page, session): import '$app/stores'
 </script>
 
 <nav class="navbar navbar-light">
