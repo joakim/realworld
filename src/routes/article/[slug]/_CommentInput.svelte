@@ -31,7 +31,7 @@
 	action="/article/{ slug }/comments.json"
 	method="post"
 	class="card comment-form"
-	use:ajax={ [:on-submit, :on-response] }
+	use:ajax={ (on-submit, on-response) }
 >
 	<div class="card-block">
 		<textarea
