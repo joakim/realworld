@@ -1,11 +1,13 @@
 <script>
 	(onMount): import 'svelte'
+	
 	let p: 0
 	let visible: false
+	
 	onMount () *->
-		visible: true
+		set visible: true
 		next: () *->
-			p: p + 0.1
+			set p: p + 0.1
 			remaining: 1 - p
 			if remaining > 0.15
 				setTimeout(next, 500 / remaining)
