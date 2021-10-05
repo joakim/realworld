@@ -4,7 +4,7 @@ get: async [params, locals] ->
 	[slug]: params
 	[article]: await api.get("articles/{ slug }", locals.user.token)
 	
-	[ body: article ]
+	(body: article)
 
 put: async (request) *->
 	print('put', request)
