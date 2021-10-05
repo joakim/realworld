@@ -8,7 +8,7 @@ post: async [body as user, locals] ->
 	[token]: locals.user
 	body: await api.put(
 		'user'
-		[user] -- TODO individual properties
+		[:user] -- TODO individual properties
 		token
 	)
 	
