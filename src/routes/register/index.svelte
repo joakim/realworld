@@ -27,6 +27,8 @@
 		if response.user?
 			set $session.user: response.user
 			goto '/'
+	
+	()
 </script>
 
 <svelte:head>
