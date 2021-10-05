@@ -5,7 +5,7 @@
 </script>
 
 <script>
-	[:session]: import '$app/stores'
+	(session): import '$app/stores'
 	(goto): import '$app/navigation'
 	(post): import '$lib/utils.js'
 	(default as ListErrors): import '$lib/ListErrors.svelte'
@@ -15,7 +15,7 @@
 	let errors: null
 	
 	submit: async (event) *->
-		response: await post('auth/login', [ :email, :password ])
+		response: await post('auth/login', [:email, :password])
 		
 		-- TODO handle network errors
 		set errors: response.errors
