@@ -1,6 +1,8 @@
 <script context="module">
-	load: async ([ :session ]) ->
-		[ redirect: '/', status: 302 ] if session.user? else []
+	load: async [session] -> (
+		redirect: '/'
+		status: 302 ] if session.user? else []
+	)
 	
 	(load)
 </script>
@@ -17,7 +19,7 @@
 	let errors: null
 	
 	submit: async (event) *->
-		response: await post('auth/register', [ :username, :email, :password ])
+		response: await post('auth/register', (username, email, password))
 		
 		-- TODO handle network errors
 		set errors: response.errors
