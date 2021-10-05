@@ -12,7 +12,9 @@ send: async [method, path, data, token] ->
 	
 	fetch("{ base }/{ path }", opts)
 		.then (r) -> r.text()
-		.then (json) -> try { JSON.parse json } catch err { json }
+		.then (json) ->
+			try { JSON.parse json }
+			catch err { json }
 
 get: (path, token) -> send [method: 'GET', :path, :token]
 del: (path, token) -> send [method: 'DELETE', :path, :token]
