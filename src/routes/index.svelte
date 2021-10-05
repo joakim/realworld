@@ -1,7 +1,7 @@
 <script context="module">
 	load: async [page, fetch] ->
-		[0: [articles, pages], 1: [tags]]: await promise.all [
-			fetch("/articles.json?{ page.query }", [credentials: 'include'])
+		arr[[articles, pages], [tags]]: await promise.all arr[
+			fetch("/articles.json?{ page.query }", (credentials: 'include'))
 				.then (r) -> r.json()
 			fetch('/tags.json')
 				.then (r) -> r.json()
@@ -25,6 +25,8 @@
 	$ tag: $page.query.get('tag')
 	$ tab: $page.query.get('tab') ? 'all'
 	$ page-link-base: "tag={ tag }" if tag? else "tab={ tab }"
+	
+	()
 </script>
 
 <svelte:head>
