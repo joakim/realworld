@@ -1,7 +1,9 @@
 <script context="module">
-	load: async ([ :page, :fetch ]) ->
+	load: async [page, fetch] ->
 		res: await fetch "/profile/@{ page.params.user }.json"
-		[ props: [ profile: await res.json() ] ]
+		profile: await res.json()
+		
+		(props: (profile))
 	
 	(load)
 </script>
@@ -18,10 +20,10 @@
 	$ is-user: $session.user and profile.username = $session.user.username
 	
 	let current-token
-	toggle_following: async () *->
+	toggle-following: async () *->
 		token: { set current-token: [] }
 		
-		[:following, :username]: profile
+		[following, username]: profile
 		
 		-- optimistic UI
 		set profile.following: not profile.following
