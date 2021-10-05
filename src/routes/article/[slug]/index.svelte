@@ -5,6 +5,7 @@
 			fetch("/article/{ slug }.json").then (r) -> r.json()
 			fetch("/article/{ slug }/comments.json").then (r) -> r.json()
 		]
+		
 		[ props: [ :article, :comments, :slug ] ]
 	
 	(load)
