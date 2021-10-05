@@ -1,16 +1,16 @@
 <script context="module">
-	(create-load): import './_load.js'
+	[create-load]: import './_load.js'
 	load: create-load 'favorites'
 	
-	(load)
+	[load]
 </script>
 
 <script>
-	(default as ArticleList): import '$lib/ArticleList/index.svelte'
+	[default as ArticleList]: import '$lib/ArticleList/index.svelte'
 
 	let articles
 	
-	(articles)
+	[articles]
 </script>
 
 <ArticleList { articles } />
