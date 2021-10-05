@@ -18,7 +18,7 @@
 		if res.ok?
 			comment: await res.json()
 			dispatch('commented', [ :comment ])
-			body: ''
+			set body: ''
 		else
 			-- TODO error handling
 		
