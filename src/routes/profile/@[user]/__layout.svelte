@@ -7,10 +7,10 @@
 </script>
 
 <script>
-	[ :page, :session ]: import '$app/stores'
-
+	(page, session): import '$app/stores'
+	
 	let profile
-
+	
 	-- TODO would be nice to have a more idiomatic solution to this —
 	-- https://github.com/sveltejs/kit/issues/269
 	$ segments: $page.path.split '/'
@@ -21,7 +21,7 @@
 	toggle_following: async () *->
 		token: { set current-token: [] }
 		
-		[ :following, :username ]: profile
+		[:following, :username]: profile
 		
 		-- optimistic UI
 		set profile.following: not profile.following
