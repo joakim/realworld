@@ -15,7 +15,7 @@
 			<CommentInput
 				{ slug }
 				{ user }
-				on:commented={ ([:detail]) *-> (set comments: [detail.comment, comments...]) }
+				on:commented={ ([ :detail ]) *-> (set comments: [detail.comment, comments...]) }
 			/>
 		</div>
 	{:else}
