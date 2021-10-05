@@ -13,7 +13,7 @@
 			set article.favoritesCount: + 1
 			set article.favorited: true
 		
-		[article]: await ->
+		[article]: await
 		 	if article.favorited?
 				api.post("articles/{ article.slug }/favorite", null, user.token)
 			else
