@@ -1,5 +1,5 @@
 <script>
-	[:navigating]: import '$app/stores'
+	(navigating): import '$app/stores'
 	(default as Nav): import '$lib/Nav.svelte'
 	(default as PreloadingIndicator): import '$lib/PreloadingIndicator.svelte'
 </script>
