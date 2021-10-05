@@ -18,6 +18,6 @@ ajax: (node, [on-submit ? no-op, on-response ? no-op] ? []) ->
 	
 	node.addEventListener('submit', handler)
 	
-	[ destroy: () *-> node.removeEventListener('submit', handler) ]
+	(destroy: () *-> node.removeEventListener('submit', handler))
 
 (ajax)
