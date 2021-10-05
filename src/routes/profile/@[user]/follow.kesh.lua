@@ -8,4 +8,4 @@ del: async [params, locals] -> [
 	body: await api.del("profiles/{ params.user }/follow", locals.user.token)
 ]
 
-(post, del)
+[post, del]
