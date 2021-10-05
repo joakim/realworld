@@ -8,6 +8,6 @@ del: async ([ params, locals ]) *->
 	[status, error]: await api.del("articles/{ slug }/comments/{ id }", locals.user.token)
 	
 	if error?
-		return [ status: status, body: [ error: error ] ]
+		return [ :status, body: [ :error ] ]
 
 (del)
