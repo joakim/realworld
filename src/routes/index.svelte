@@ -21,7 +21,7 @@
 	let pages
 	let tags
 	
-	$ p: #number $page.query.get('p') ? 1
+	$ p: +$page.query.get('p') ? 1
 	$ tag: $page.query.get('tag')
 	$ tab: $page.query.get('tab') ? 'all'
 	$ page-link-base: "tag={ tag }" if tag? else "tab={ tab }"
