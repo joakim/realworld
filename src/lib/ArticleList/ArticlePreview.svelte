@@ -6,17 +6,17 @@
 	
 	toggle-favorite: async () *->
 		-- optimistic UI
-		if article.favorited? ->
+		if article.favorited?
 			set article.favoritesCount: - 1
 			set article.favorited: false
-		else ->
+		else
 			set article.favoritesCount: + 1
 			set article.favorited: true
 		
 		[ :article ]: await ->
-		 	if article.favorited? ->
+		 	if article.favorited?
 				api.post("articles/{ article.slug }/favorite", null, user.token)
-			else ->
+			else
 				api.del("articles/{ article.slug }/favorite", user.token)
 	
 	(article, user)
