@@ -10,11 +10,13 @@ send: async [method, path, data, token] ->
 	if token?
 		set opts.headers.'Authorization': "Token { token }"
 	
-	fetch("{ base }/{ path }", opts)
+	result: fetch("{ base }/{ path }", opts)
 		.then (r) -> r.text()
 		.then (json) ->
 			try { JSON.parse json }
 			catch err { json }
+	
+	(result)
 
 get: (path, token) -> send [method: 'GET', :path, :token]
 del: (path, token) -> send [method: 'DELETE', :path, :token]
