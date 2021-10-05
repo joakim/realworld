@@ -7,7 +7,7 @@ handle: async [request, resolve] ->
 	set request.locals.user: if jwt?
 		JSON.parse jwt
 	
-	await resolve request
+	(await resolve request)
 
 get-session: [locals] -> [
 	user: if locals.user?
