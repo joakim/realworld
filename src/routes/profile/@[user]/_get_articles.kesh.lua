@@ -1,5 +1,5 @@
 api: import '$lib/api.js'
-(page-size): '$lib/constants.json'
+[page-size]: '$lib/constants.json'
 
 get-articles: async ([query, params, locals], type) ->
 	p: +query.get('page') ? 1
