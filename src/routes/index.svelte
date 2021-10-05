@@ -1,11 +1,13 @@
 <script context="module">
-	load: async ([ :page, :fetch ]) ->
-		[[:articles, :pages], [:tags]]: await promise.all [
-			fetch("/articles.json?{ page.query }", [ credentials: 'include' ]).then (r) -> r.json()
-			fetch('/tags.json').then (r) -> r.json()
+	load: async [page, fetch] ->
+		array[[articles, pages], [tags]]: await promise.all [
+			fetch("/articles.json?{ page.query }", [credentials: 'include'])
+				.then (r) -> r.json()
+			fetch('/tags.json')
+				.then (r) -> r.json()
 		]
 		
-		[ props: [ :articles, :pages, :tags ] ]
+		(props: [:articles, :pages, :tags])
 	
 	(load)
 </script>
