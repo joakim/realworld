@@ -2,7 +2,7 @@ api: import '$lib/api.js'
 (page-size): '$lib/constants.json'
 
 get-articles: async ([query, params, locals], type) ->
-	p: #number query.get('page') ? 1
+	p: +query.get('page') ? 1
 	q: URLSearchParams [
 		['limit', page-size]
 		['offset', (p - 1) * page-size]
@@ -16,6 +16,6 @@ get-articles: async ([query, params, locals], type) ->
 	
 	pages: Math.ceil(articles-count / page-size)
 	
-	(body: (articles, pages))
+	[body: [articles, pages]]
 
-(get-articles)
+[get-articles]
